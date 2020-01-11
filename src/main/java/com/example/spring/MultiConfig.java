@@ -2,11 +2,10 @@ package com.example.spring;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 
 
 @EnableWebSecurity
@@ -29,6 +28,15 @@ public class MultiConfig {
 					.permitAll()
 				.and().formLogin(); // this is necessary that form login page will be generated !!
 		}
+		@Override
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			
+			auth
+				.inMemoryAuthentication()
+					.withUser("micha")
+					.password("{noop}supp")
+					.roles("R_USER");
+		}
 	}
 
 	
@@ -42,27 +50,46 @@ public class MultiConfig {
 			http
 				.requestMatchers()
 					.antMatchers("/1")
-					.antMatchers("/2")
+//					.antMatchers("/2")
 					.and()
 				.authorizeRequests()
-					.anyRequest().authenticated()
+					.anyRequest().hasRole("R_USER")
 					.and()
 				.formLogin();
 		}
+
+		
+
 	}
 	
 	@Configuration
 	@Order(3)
 	public static class BasicSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 			
-			@Override
-			protected void configure(HttpSecurity http)  throws Exception {
+		@Override
+		protected void configure(HttpSecurity http)  throws Exception {
+	
+		http
+			.authorizeRequests( authorizeRequests ->
+				authorizeRequests
+					.antMatchers("/inform").hasRole("R_ADMIN")
+					.anyRequest().denyAll()
+			)
+			.httpBasic();
+		}
 		
-			http
-				.authorizeRequests()
-						.anyRequest().authenticated()
-						.and()
-				.httpBasic();
-		}		
+		@Override
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			
+			auth
+				.inMemoryAuthentication()
+					.withUser("admin")
+					.password("{noop}admin")
+					.roles("R_ADMIN");
+					
+		}
 	}
+	
+	
+	
 }
