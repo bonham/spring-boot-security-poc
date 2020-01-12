@@ -35,7 +35,7 @@ public class WebSecurityTest {
 	@Test
 	public void accessForbiddenResource() throws Exception {
 		mockMvc.perform(get("/2"))
-			.andExpect(status().isForbidden());
+			.andExpect(status().isUnauthorized());
 	}
 
 	@Test

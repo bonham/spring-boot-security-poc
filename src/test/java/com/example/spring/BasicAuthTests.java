@@ -2,7 +2,6 @@ package com.example.spring;
 
 import org.junit.jupiter.api.Test;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -17,41 +16,42 @@ public class BasicAuthTests {
 	@LocalServerPort
 	private int port;
 
-	@Autowired
-	private TestRestTemplate restTemplate;
-
 	@Test
-	public void greetingShouldReturnDefaultMessage() throws Exception {
+	public void basicProtectedEndpointTest() throws Exception {
 	
 		String baseUrl = "http://localhost:" + port;
-		TestRestTemplate trt = this.restTemplate;
-		
-		//RestTemplate rt = trt.getRestTemplate();
-		
+		//TestRestTemplate trt = this.restTemplate;
+
+		TestRestTemplate trt = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
+
 		ResponseEntity<String> response1 = trt.withBasicAuth("admin", "admin")
 				.getForEntity(baseUrl + "/inform", String.class);
 		
-		assertThat(response1.getStatusCode().equals(HttpStatus.OK));
-		assertThat(response1.getBody().contains("informed"));
+		assertThat(response1.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response1.getBody()).contains("informed");
 				
-		ResponseEntity<String> secondValidResponse = trt
-				.getForEntity(baseUrl + "/inform", String.class);
-		assertThat(secondValidResponse.getStatusCode().equals(HttpStatus.OK));
-		
-
-		ResponseEntity<String> thirdInvalidResponse = trt
-				.getForEntity(baseUrl + "/1", String.class);
-
-		assertThat(thirdInvalidResponse.getStatusCode().is3xxRedirection());
+		//Without user + password 
+//		ResponseEntity<String> secondValidResponse = trt
+//				.getForEntity(baseUrl + "/inform", String.class);
+//		assertThat(secondValidResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+//		
+//
+//		ResponseEntity<String> thirdInvalidResponse = trt
+//				.getForEntity(baseUrl + "/1", String.class);
+//
+//		assertThat(thirdInvalidResponse.getStatusCode()).isEqualTo(HttpStatus.FOUND);
 	}
 	
 	@Test
-	public void basicAuthShouldNotWorkOnFormEndpoints() throws Exception {
-		
+	public void basicAuthShouldNotWorkOnFormEndpoints1() throws Exception {
+
+		TestRestTemplate trt = new TestRestTemplate();
+
 		assertThat(
-				this.restTemplate
+				trt
 				.withBasicAuth("admin", "admin")
 				.getForEntity("http://localhost:" + port + "/1",
-				String.class).getStatusCode().is3xxRedirection());
+				String.class).getStatusCode()).isEqualTo(HttpStatus.FOUND);
 	}
+	
 }
