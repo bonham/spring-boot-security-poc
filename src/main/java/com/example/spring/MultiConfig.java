@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 public class MultiConfig {
 
+	@Configuration
 	@Order(1)
 	public static class PermitWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 	
@@ -59,7 +60,7 @@ public class MultiConfig {
 
 	}
 	
-	
+	@Configuration
 	@Order(3)
 	public static class BasicSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 			

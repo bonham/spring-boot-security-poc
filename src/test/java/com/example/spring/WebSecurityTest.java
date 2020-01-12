@@ -11,8 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.spring.SpringsandboxDebugApplication;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 public class WebSecurityTest {
@@ -55,11 +53,4 @@ public class WebSecurityTest {
 		
 	}
 
-	@Test
-	public void accessAfterBasicAuthSuccessNoMockUser() throws Exception {
-		//String basicDigestHeader = "";
-		mockMvc.perform(get("/inform"))
-			.andExpect(status().isOk());
-		
-	}
 }
