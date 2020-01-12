@@ -4,11 +4,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 
-@EnableWebSecurity
 public class MultiConfig {
 
 	@Configuration
@@ -35,7 +33,7 @@ public class MultiConfig {
 				.inMemoryAuthentication()
 					.withUser("micha")
 					.password("{noop}supp")
-					.roles("R_USER");
+					.roles("USER");
 		}
 	}
 
@@ -53,7 +51,7 @@ public class MultiConfig {
 //					.antMatchers("/2")
 					.and()
 				.authorizeRequests()
-					.anyRequest().hasRole("R_USER")
+					.anyRequest().hasRole("USER")
 					.and()
 				.formLogin();
 		}
@@ -72,7 +70,7 @@ public class MultiConfig {
 		http
 			.authorizeRequests( authorizeRequests ->
 				authorizeRequests
-					.antMatchers("/inform").hasRole("R_ADMIN")
+					.antMatchers("/inform").hasRole("ADMIN")
 					.anyRequest().denyAll()
 			)
 			.httpBasic();
@@ -85,7 +83,7 @@ public class MultiConfig {
 				.inMemoryAuthentication()
 					.withUser("admin")
 					.password("{noop}admin")
-					.roles("R_ADMIN");
+					.roles("ADMIN");
 					
 		}
 	}
