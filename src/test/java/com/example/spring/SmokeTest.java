@@ -1,4 +1,4 @@
-package com.example.testingweb;
+package com.example.spring;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.example.spring.Example;
 import com.example.spring.SpringsandboxDebugApplication;
 
-@SpringBootTest(classes= SpringsandboxDebugApplication.class)
+@SpringBootTest
 public class SmokeTest {
 
 	@Autowired

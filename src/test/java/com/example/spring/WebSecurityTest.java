@@ -1,4 +1,4 @@
-package com.example.test.websecurity;
+package com.example.spring;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.spring.SpringsandboxDebugApplication;
 
-@SpringBootTest(classes = SpringsandboxDebugApplication.class)
+@SpringBootTest
 @AutoConfigureMockMvc
 public class WebSecurityTest {
 	

@@ -1,4 +1,4 @@
-package com.example.testingweb;
+package com.example.spring;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ import com.example.spring.SpringsandboxDebugApplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = SpringsandboxDebugApplication.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class HttpRequestTest {
 
 	@LocalServerPort

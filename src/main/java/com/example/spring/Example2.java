@@ -3,7 +3,6 @@ package com.example.spring;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-//@EnableAutoConfiguration
 public class Example2 {
 
     @RequestMapping("/2")
