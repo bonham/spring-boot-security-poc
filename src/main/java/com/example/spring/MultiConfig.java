@@ -48,7 +48,7 @@ public class MultiConfig {
 			http
 				.requestMatchers()
 					.antMatchers("/1")
-//					.antMatchers("/2")
+					.antMatchers("/2")
 					.and()
 				.authorizeRequests()
 					.anyRequest().hasRole("USER")
